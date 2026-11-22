@@ -121,9 +121,30 @@ export const plans = [
 ];
 
 export const work = [
-  { tag: 'WEB + HOSTING', client: '[Client name]', result: '[One-line result — what changed for the client]', services: 'Website · Hosting · SEO', tone: 'a' },
-  { tag: 'COLLEGE ACTIVATION', client: '[Client name]', result: '[One-line result — what changed for the client]', services: 'Campus · Creators', tone: 'b' },
-  { tag: 'SMS + EMAIL', client: '[Client name]', result: '[One-line result — what changed for the client]', services: 'Bulk SMS · Email', tone: 'c' },
+  {
+    tag: 'WEB + HOSTING',
+    client: 'Aether Mobility',
+    result: 'Replatformed to Next.js on dedicated high-speed cloud VPS — 99.98% uptime and 3.2× faster page loads across 1.4M monthly visitors.',
+    services: 'Website · Cloud Hosting · SEO',
+    tone: 'a',
+    image: '/work/project-web.jpg',
+  },
+  {
+    tag: 'COLLEGE ACTIVATION',
+    client: 'Pulse Energy Drink',
+    result: '42 premier college campuses, 18,000+ on-ground student samplings, and 2.4M organic social impressions during fest season.',
+    services: 'Campus Activations · Student Creators',
+    tone: 'b',
+    image: '/work/project-activation.jpg',
+  },
+  {
+    tag: 'SMS + EMAIL',
+    client: 'Urban Stitch D2C',
+    result: 'Automated transactional SMS & cart abandonment engine driving 28% recovery rate and ₹1.8Cr incremental revenue.',
+    services: 'Bulk SMS · Lifecycle Email · DLT Setup',
+    tone: 'c',
+    image: '/work/project-messaging.jpg',
+  },
 ];
 
 export const faqs = [

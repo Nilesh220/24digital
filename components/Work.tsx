@@ -15,10 +15,20 @@ export default function Work() {
         {work.map((w, i) => (
           <a key={w.tag} href="#contact" className="work reveal" style={vars({ '--d': i })}>
             <div className="work__media">
-              {/* Replace with <Image> once you have project shots */}
-              <div className={`work__img work__img--${w.tone}`} />
+              {w.image ? (
+                <img
+                  src={w.image}
+                  alt={w.client}
+                  className="work__real-img"
+                  loading="lazy"
+                />
+              ) : (
+                <>
+                  <div className={`work__img work__img--${w.tone}`} />
+                  <span className="work__ph">Project image</span>
+                </>
+              )}
               <span className="work__tag">{w.tag}</span>
-              <span className="work__ph">Project image</span>
               <span className="work__go"><Arrow size={20} /></span>
             </div>
             <div className="work__meta"><h3>{w.client}</h3><span>{w.services}</span></div>
