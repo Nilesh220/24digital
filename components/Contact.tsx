@@ -10,6 +10,7 @@ export default function Contact({ initialService }: { initialService?: string })
   const [picks, setPicks] = useState<string[]>([]);
   const [status, setStatus] = useState<Status>('idle');
   const [waLink, setWaLink] = useState<string>('');
+  const [routedPhone, setRoutedPhone] = useState<string>('918699260386');
 
   useEffect(() => {
     if (initialService) {
@@ -54,7 +55,12 @@ export default function Contact({ initialService }: { initialService?: string })
       `*Details:* ${message || 'None provided'}\n\n` +
       `Sent via 24digital.store`;
 
-    const targetPhone = '918699260386';
+    const isAppOrSms =
+      picks.some((p) => ['App', 'SMS / Email', 'Hosting & domain'].includes(p)) &&
+      !picks.some((p) => ['Website', 'Performance marketing', 'Branding', 'Social', 'College activation', 'Corporate activation', 'Creators'].includes(p));
+
+    const targetPhone = isAppOrSms ? '918235849776' : '918699260386';
+    setRoutedPhone(targetPhone);
     const waUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(waText)}`;
     setWaLink(waUrl);
 
@@ -101,12 +107,12 @@ export default function Contact({ initialService }: { initialService?: string })
               </div>
               <div>
                 <span>Phone / WhatsApp</span>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
                   <a href={`tel:${site.primaryPhone.replace(/\s+/g, '')}`}>
-                    <b>{site.primaryPhone}</b> <span style={{ fontSize: 13, opacity: 0.8 }}>(Main)</span>
+                    <b>{site.primaryPhone}</b> <span style={{ fontSize: 13, opacity: 0.8 }}>(Marketing &amp; Websites)</span>
                   </a>
                   <a href={`tel:${site.secondaryPhone.replace(/\s+/g, '')}`}>
-                    <b>{site.secondaryPhone}</b>
+                    <b>{site.secondaryPhone}</b> <span style={{ fontSize: 13, opacity: 0.8 }}>(App Dev &amp; SMS)</span>
                   </a>
                 </div>
               </div>
@@ -123,7 +129,13 @@ export default function Contact({ initialService }: { initialService?: string })
                 <span className="thanks__icon"><Check size={28} color="currentColor" /></span>
                 <h3>Got it — thank you.</h3>
                 <p>
-                  Your enquiry is with the team. You can also send the details directly to <b>+91 86992 60386</b> on WhatsApp for immediate priority response.
+                  Your enquiry is with the team. You can also send the details directly to{' '}
+                  <b>
+                    {routedPhone === '918235849776'
+                      ? '+91 82358 49776 (App Dev & SMS)'
+                      : '+91 86992 60386 (Marketing & Websites)'}
+                  </b>{' '}
+                  on WhatsApp for immediate priority response.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 360 }}>
                   {waLink && (
@@ -184,21 +196,21 @@ export default function Contact({ initialService }: { initialService?: string })
                 <div style={{ marginTop: 18, paddingTop: 14, borderTop: '1px solid rgba(18, 18, 18, 0.1)', fontSize: 14, color: 'var(--muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: '8px 12px' }}>
                   <span>Prefer WhatsApp? Message us:</span>
                   <a
-                    href="https://wa.me/918699260386?text=Hi%2024digital,%20I'd%20like%20to%20discuss%20a%20project."
+                    href="https://wa.me/918699260386?text=Hi%2024digital,%20I'd%20like%20to%20discuss%20a%20website%20or%20marketing%20project."
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ color: 'var(--blue)', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 4 }}
                   >
-                    +91 86992 60386 (Main)
+                    +91 86992 60386 (Marketing &amp; Websites)
                   </a>
                   <span>·</span>
                   <a
-                    href="https://wa.me/918235849776?text=Hi%2024digital,%20I'd%20like%20to%20discuss%20a%20project."
+                    href="https://wa.me/918235849776?text=Hi%2024digital,%20I'd%20like%20to%20discuss%20app%20development%20or%20SMS%20services."
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ color: 'var(--blue)', fontWeight: 600 }}
                   >
-                    +91 82358 49776
+                    +91 82358 49776 (App Dev &amp; SMS)
                   </a>
                 </div>
               </form>

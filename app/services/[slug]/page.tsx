@@ -56,8 +56,15 @@ export default async function ServiceDetailPage({ params }: Props) {
 
   const siteUrl = site.url;
   const relatedServices = services.filter((s) => service.relatedSlugs.includes(s.slug));
+
+  const isAppOrSms =
+    service.slug === 'app-development' ||
+    service.slug === 'bulk-sms-email-marketing' ||
+    service.slug === 'web-hosting-domains';
+
+  const waTargetNumber = isAppOrSms ? '918235849776' : '918699260386';
   const waPrefill = `Hi 24digital, I'm interested in ${service.name}.`;
-  const waUrl = `https://wa.me/918699260386?text=${encodeURIComponent(waPrefill)}`;
+  const waUrl = `https://wa.me/${waTargetNumber}?text=${encodeURIComponent(waPrefill)}`;
 
   // Structured Data JSON-LD
   const serviceSchema = {
@@ -70,7 +77,7 @@ export default async function ServiceDetailPage({ params }: Props) {
       '@type': 'ProfessionalService',
       name: site.name,
       url: siteUrl,
-      telephone: site.primaryPhone,
+      telephone: isAppOrSms ? site.secondaryPhone : site.primaryPhone,
       email: site.email,
       address: {
         '@type': 'PostalAddress',

@@ -590,8 +590,10 @@ textarea.field { resize: vertical; min-height: 120px; }
   color: var(--ink);
   transition: border-color 0.2s, transform 0.2s;
 }
-.wa-card__item:hover {
+.wa-card__item:hover,
+.wa-card__item--active {
   border-color: #20BA56;
+  background: rgba(32, 186, 86, 0.05);
   transform: translateX(2px);
 }
 .wa-card__item-icon {

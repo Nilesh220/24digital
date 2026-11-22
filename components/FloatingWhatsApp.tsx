@@ -13,18 +13,20 @@ export default function FloatingWhatsApp() {
   const menuRef = useRef<HTMLDivElement>(null);
 
   // Determine current context for prefilled message
+  let currentSlug = '';
   let currentServiceName = '';
   if (pathname && pathname.startsWith('/services/')) {
-    const slug = pathname.replace('/services/', '').replace(/\/$/, '');
-    const found = services.find((s) => s.slug === slug);
+    currentSlug = pathname.replace('/services/', '').replace(/\/$/, '');
+    const found = services.find((s) => s.slug === currentSlug);
     if (found) {
       currentServiceName = found.name;
     }
   }
 
-  const prefilledText = currentServiceName
-    ? `Hi 24digital, I'm interested in ${currentServiceName}.`
-    : `Hi 24digital, I'd like to discuss a project.`;
+  const isAppOrSmsPage =
+    currentSlug === 'app-development' ||
+    currentSlug === 'bulk-sms-email-marketing' ||
+    currentSlug === 'web-hosting-domains';
 
   // First-load entrance flag
   useEffect(() => {
@@ -92,19 +94,33 @@ export default function FloatingWhatsApp() {
 
           <div className="wa-card__list">
             {site.whatsapps.map((wa) => {
-              const waUrl = `https://wa.me/${wa.raw}?text=${encodeURIComponent(prefilledText)}`;
+              const isTargetLine = isAppOrSmsPage ? wa.raw === '918235849776' : wa.raw === '918699260386';
+
+              const itemPrefill = currentServiceName
+                ? `Hi 24digital, I'm interested in ${currentServiceName}.`
+                : wa.raw === '918235849776'
+                ? `Hi 24digital, I'd like to discuss app development or SMS services.`
+                : `Hi 24digital, I'd like to discuss a website or marketing project.`;
+
+              const waUrl = `https://wa.me/${wa.raw}?text=${encodeURIComponent(itemPrefill)}`;
+
+              let badgeText = wa.badge;
+              if (isAppOrSmsPage && wa.raw === '918235849776') {
+                badgeText = 'SPECIALIST';
+              }
+
               return (
                 <a
                   key={wa.raw}
                   href={waUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="wa-card__item"
+                  className={`wa-card__item${isTargetLine && currentServiceName ? ' wa-card__item--active' : ''}`}
                   onClick={() => {
                     if (typeof window !== 'undefined' && (window as unknown as { gtag?: Function }).gtag) {
                       (window as unknown as { gtag: Function }).gtag('event', 'whatsapp_click', {
                         event_category: 'engagement',
-                        event_label: wa.number,
+                        event_label: `${wa.number} (${wa.label})`,
                       });
                     }
                   }}
@@ -114,11 +130,9 @@ export default function FloatingWhatsApp() {
                   </div>
                   <div className="wa-card__item-meta">
                     <span className="wa-card__number">{wa.number}</span>
-                    <span className="wa-card__label">
-                      {wa.primary ? 'Main line · Nilesh' : 'Direct line · Support'}
-                    </span>
+                    <span className="wa-card__label">{wa.label}</span>
                   </div>
-                  {wa.primary && <span className="wa-card__badge">MAIN</span>}
+                  {badgeText && <span className="wa-card__badge">{badgeText}</span>}
                 </a>
               );
             })}

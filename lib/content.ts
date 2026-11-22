@@ -16,8 +16,22 @@ export const site = {
   primaryWhatsapp: '918699260386',
   secondaryWhatsapp: '918235849776',
   whatsapps: [
-    { number: '+91 86992 60386', raw: '918699260386', label: 'Main line', primary: true },
-    { number: '+91 82358 49776', raw: '918235849776', label: 'Direct line', primary: false },
+    {
+      number: '+91 86992 60386',
+      raw: '918699260386',
+      label: 'Marketing & Websites',
+      badge: 'MAIN',
+      primary: true,
+      role: 'marketing_web',
+    },
+    {
+      number: '+91 82358 49776',
+      raw: '918235849776',
+      label: 'App Dev & SMS Services',
+      badge: 'DEV & SMS',
+      primary: false,
+      role: 'app_sms',
+    },
   ],
   // Social profiles: items with '#' are hidden in the UI until real URLs are supplied
   social: [

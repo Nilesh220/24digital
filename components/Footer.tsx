@@ -21,9 +21,13 @@ export default function Footer() {
               </div>
               <div>
                 <span>Phone / WhatsApp: </span>
-                <a className="flink" href={`tel:${site.primaryPhone.replace(/\s+/g, '')}`}>{site.primaryPhone}</a>
+                <a className="flink" href={`tel:${site.primaryPhone.replace(/\s+/g, '')}`}>
+                  {site.primaryPhone} <span style={{ opacity: 0.7 }}>(Marketing &amp; Websites)</span>
+                </a>
                 <span style={{ margin: '0 6px' }}>·</span>
-                <a className="flink" href={`tel:${site.secondaryPhone.replace(/\s+/g, '')}`}>{site.secondaryPhone}</a>
+                <a className="flink" href={`tel:${site.secondaryPhone.replace(/\s+/g, '')}`}>
+                  {site.secondaryPhone} <span style={{ opacity: 0.7 }}>(App Dev &amp; SMS)</span>
+                </a>
               </div>
               <div>
                 <span>Location: </span>

@@ -150,15 +150,25 @@ export default function Header() {
               ))}
             </nav>
 
-            <div style={{ marginTop: 'auto', paddingTop: 24, borderTop: '1px solid var(--line)', display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <div style={{ marginTop: 'auto', paddingTop: 24, borderTop: '1px solid var(--line)', display: 'flex', flexDirection: 'column', gap: 10 }}>
               <a
-                href={`https://wa.me/918699260386?text=Hi%2024digital,%20I'd%20like%20to%20discuss%20a%20project.`}
+                href={`https://wa.me/918699260386?text=Hi%2024digital,%20I'd%20like%20to%20discuss%20a%20website%20or%20marketing%20project.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn--whatsapp btn--block"
                 onClick={() => setMenuOpen(false)}
               >
-                <WhatsApp size={18} /> WhatsApp {site.primaryPhone}
+                <WhatsApp size={18} /> WhatsApp: Marketing &amp; Websites
+              </a>
+              <a
+                href={`https://wa.me/918235849776?text=Hi%2024digital,%20I'd%20like%20to%20discuss%20app%20development%20or%20SMS%20services.`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn--ghost btn--block"
+                style={{ fontSize: 13, minHeight: 44 }}
+                onClick={() => setMenuOpen(false)}
+              >
+                <WhatsApp size={16} /> WhatsApp: App Dev &amp; SMS
               </a>
               <a
                 href="/#contact"
