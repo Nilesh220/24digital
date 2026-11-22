@@ -53,6 +53,14 @@ export const metadata: Metadata = {
     siteName: '24digital',
     locale: 'en_IN',
     type: 'website',
+    images: [
+      {
+        url: '/brand/24digital-og.png',
+        width: 1200,
+        height: 630,
+        alt: '24digital — Build · Host · Reach · Activate',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -60,6 +68,7 @@ export const metadata: Metadata = {
     description:
       'Websites, apps, hosting, bulk SMS & email, plus campus tours and creator campaigns. One team for the whole launch.',
     creator: '@24digital',
+    images: ['/brand/24digital-og.png'],
   },
   robots: {
     index: true,

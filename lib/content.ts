@@ -123,27 +123,27 @@ export const plans = [
 export const work = [
   {
     tag: 'WEB + HOSTING',
-    client: 'Aether Mobility',
-    result: 'Replatformed to Next.js on dedicated high-speed cloud VPS — 99.98% uptime and 3.2× faster page loads across 1.4M monthly visitors.',
+    client: 'Everyday Living',
+    result: 'High-speed Next.js e-commerce store and dedicated cloud hosting — live in 3 weeks with 99.9% uptime.',
     services: 'Website · Cloud Hosting · SEO',
     tone: 'a',
-    image: '/work/project-web.jpg',
+    image: '/work/work-web-hosting.webp',
   },
   {
     tag: 'COLLEGE ACTIVATION',
-    client: 'Pulse Energy Drink',
-    result: '42 premier college campuses, 18,000+ on-ground student samplings, and 2.4M organic social impressions during fest season.',
+    client: "Fest Season '26",
+    result: 'All-access campus fest tour across 30+ colleges — 15,000+ student samplings, ambassador network, and main-stage moments.',
     services: 'Campus Activations · Student Creators',
     tone: 'b',
-    image: '/work/project-activation.jpg',
+    image: '/work/work-college-activation.webp',
   },
   {
     tag: 'SMS + EMAIL',
-    client: 'Urban Stitch D2C',
-    result: 'Automated transactional SMS & cart abandonment engine driving 28% recovery rate and ₹1.8Cr incremental revenue.',
+    client: 'Drop & Retail Launch',
+    result: 'Automated 48-hour flash drop SMS alerts, instant OTP delivery, and lifecycle newsletters that people actually open.',
     services: 'Bulk SMS · Lifecycle Email · DLT Setup',
     tone: 'c',
-    image: '/work/project-messaging.jpg',
+    image: '/work/work-sms-email.webp',
   },
 ];
 
