@@ -1,15 +1,27 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useState, useEffect, type FormEvent } from 'react';
 import { needs, site } from '../lib/content';
 import { Arrow, Check, WhatsApp } from './ui/Icons';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
-export default function Contact() {
+export default function Contact({ initialService }: { initialService?: string }) {
   const [picks, setPicks] = useState<string[]>([]);
   const [status, setStatus] = useState<Status>('idle');
   const [waLink, setWaLink] = useState<string>('');
+
+  useEffect(() => {
+    if (initialService) {
+      const match = needs.find(
+        (n) => n.toLowerCase() === initialService.toLowerCase() ||
+               initialService.toLowerCase().includes(n.toLowerCase())
+      );
+      if (match && !picks.includes(match)) {
+        setPicks([match]);
+      }
+    }
+  }, [initialService]);
 
   const toggle = (t: string) =>
     setPicks((cur) => (cur.includes(t) ? cur.filter((x) => x !== t) : [...cur, t]));
@@ -18,7 +30,14 @@ export default function Contact() {
     e.preventDefault();
     setStatus('sending');
     const form = e.currentTarget;
-    const data = Object.fromEntries(new FormData(form));
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+
+    // Bot honeypot check
+    if (data.b_company_hp) {
+      setStatus('sent');
+      return;
+    }
 
     const name = String(data.name || '').trim();
     const email = String(data.email || '').trim();
@@ -48,10 +67,16 @@ export default function Contact() {
 
       if (res.ok) {
         setStatus('sent');
+        if (typeof window !== 'undefined' && (window as unknown as { gtag?: Function }).gtag) {
+          (window as unknown as { gtag: Function }).gtag('event', 'contact_submit', {
+            event_category: 'engagement',
+            event_label: selectedNeeds,
+          });
+        }
         try {
           window.open(waUrl, '_blank', 'noopener,noreferrer');
         } catch {
-          // If browser popup blocker intercepts, the user can click the button on screen
+          // Handled via button
         }
       } else {
         setStatus('error');
@@ -70,14 +95,25 @@ export default function Contact() {
             <h2 className="contact__title">Got a launch, a fest, or a site that needs fixing?</h2>
             <p className="contact__lede">Tell us what you’re working on. We’ll come back with a plan and a quote.</p>
             <div className="contact__details">
-              <div><span>Email</span><a href={`mailto:${site.email}`}>{site.email}</a></div>
+              <div>
+                <span>Email</span>
+                <a href={`mailto:${site.email}`}>{site.email}</a>
+              </div>
               <div>
                 <span>Phone / WhatsApp</span>
-                <a href={`https://wa.me/918699260386`} target="_blank" rel="noopener noreferrer">
-                  <b>{site.phone}</b>
-                </a>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                  <a href={`tel:${site.primaryPhone.replace(/\s+/g, '')}`}>
+                    <b>{site.primaryPhone}</b> <span style={{ fontSize: 13, opacity: 0.8 }}>(Main)</span>
+                  </a>
+                  <a href={`tel:${site.secondaryPhone.replace(/\s+/g, '')}`}>
+                    <b>{site.secondaryPhone}</b>
+                  </a>
+                </div>
               </div>
-              <div><span>Office</span><b>{site.city}</b></div>
+              <div>
+                <span>Office</span>
+                <b>{site.city}</b>
+              </div>
             </div>
           </div>
 
@@ -87,7 +123,7 @@ export default function Contact() {
                 <span className="thanks__icon"><Check size={28} color="currentColor" /></span>
                 <h3>Got it — thank you.</h3>
                 <p>
-                  Your enquiry is with the team. You can also send the details directly to <b>+91 8699260386</b> on WhatsApp for immediate response.
+                  Your enquiry is with the team. You can also send the details directly to <b>+91 86992 60386</b> on WhatsApp for immediate priority response.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: 360 }}>
                   {waLink && (
@@ -97,7 +133,7 @@ export default function Contact() {
                       rel="noopener noreferrer"
                       className="btn btn--whatsapp btn--block"
                     >
-                      <WhatsApp size={20} /> Send details on WhatsApp
+                      <WhatsApp size={20} /> Open chat on WhatsApp
                     </a>
                   )}
                   <button
@@ -111,6 +147,16 @@ export default function Contact() {
               </div>
             ) : (
               <form className="form" onSubmit={onSubmit}>
+                {/* Anti-spam honeypot */}
+                <input
+                  type="text"
+                  name="b_company_hp"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', height: 0, width: 0 }}
+                  aria-hidden="true"
+                />
+
                 <div className="form__row">
                   <label>Your name<input className="field" type="text" name="name" placeholder="Full name" required autoComplete="name" /></label>
                   <label>Work email<input className="field" type="email" name="email" placeholder="you@company.com" required autoComplete="email" /></label>
@@ -125,10 +171,36 @@ export default function Contact() {
                   </div>
                 </fieldset>
                 <label>Tell us a bit more<textarea className="field" name="message" rows={4} placeholder="Timelines, budget, links — anything that helps." /></label>
-                {status === 'error' && <p role="alert" style={{ color: '#B42318', fontSize: 14 }}>Something went wrong. Please WhatsApp us directly at {site.phone}.</p>}
+                {status === 'error' && (
+                  <p role="alert" style={{ color: '#B42318', fontSize: 14 }}>
+                    Something went wrong. Please WhatsApp us directly at {site.primaryPhone}.
+                  </p>
+                )}
                 <button type="submit" className="btn btn--ink btn--block" style={{ minHeight: 56, fontSize: 16 }} disabled={status === 'sending'}>
                   {status === 'sending' ? 'Sending…' : <>Send enquiry <Arrow /></>}
                 </button>
+
+                {/* Direct WhatsApp fast links */}
+                <div style={{ marginTop: 18, paddingTop: 14, borderTop: '1px solid rgba(18, 18, 18, 0.1)', fontSize: 14, color: 'var(--muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', gap: '8px 12px' }}>
+                  <span>Prefer WhatsApp? Message us:</span>
+                  <a
+                    href="https://wa.me/918699260386?text=Hi%2024digital,%20I'd%20like%20to%20discuss%20a%20project."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: 'var(--blue)', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: 4 }}
+                  >
+                    +91 86992 60386 (Main)
+                  </a>
+                  <span>·</span>
+                  <a
+                    href="https://wa.me/918235849776?text=Hi%2024digital,%20I'd%20like%20to%20discuss%20a%20project."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: 'var(--blue)', fontWeight: 600 }}
+                  >
+                    +91 82358 49776
+                  </a>
+                </div>
               </form>
             )}
           </div>

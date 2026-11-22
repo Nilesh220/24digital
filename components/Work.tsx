@@ -7,7 +7,7 @@ export default function Work() {
       <div className="section-head reveal">
         <div>
           <p className="eyebrow">Selected work</p>
-          <h2 className="h2">Things we’ve shipped.</h2>
+          <h2 className="h2">The kind of work we do</h2>
         </div>
         <a href="#contact" className="btn btn--ghost" style={{ flex: 'none' }}>Ask for the full deck</a>
       </div>
@@ -18,7 +18,7 @@ export default function Work() {
               {w.image ? (
                 <img
                   src={w.image}
-                  alt={w.client}
+                  alt={w.title}
                   className="work__real-img"
                   loading="lazy"
                 />
@@ -31,7 +31,10 @@ export default function Work() {
               <span className="work__tag">{w.tag}</span>
               <span className="work__go"><Arrow size={20} /></span>
             </div>
-            <div className="work__meta"><h3>{w.client}</h3><span>{w.services}</span></div>
+            <div className="work__meta">
+              <h3>{w.title}</h3>
+              <span>{w.services}</span>
+            </div>
             <p className="work__result">{w.result}</p>
           </a>
         ))}

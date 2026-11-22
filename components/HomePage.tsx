@@ -11,6 +11,7 @@ import Faq from './Faq';
 import Contact from './Contact';
 import Footer from './Footer';
 import ScrollFallback from './ScrollFallback';
+import FloatingWhatsApp from './FloatingWhatsApp';
 
 export default function HomePage() {
   return (
@@ -30,6 +31,7 @@ export default function HomePage() {
       </main>
       <Footer />
       <ScrollFallback />
+      <FloatingWhatsApp />
     </div>
   );
 }

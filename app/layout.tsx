@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import { Bricolage_Grotesque, Inter_Tight } from 'next/font/google';
 import './globals.css';
+import { site, services } from '../lib/content';
+import CookieConsent from '../components/CookieConsent';
+import Analytics from '../components/Analytics';
 
 const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
@@ -14,7 +17,7 @@ const interTight = Inter_Tight({
   display: 'swap',
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.24digital.store';
+const siteUrl = site.url;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -23,21 +26,22 @@ export const metadata: Metadata = {
     template: '%s | 24digital',
   },
   description:
-    'Full-stack digital agency in India: websites, web & mobile apps, cloud hosting, bulk SMS, email marketing, and on-ground college & corporate activations. One team for the whole launch.',
+    'Full-stack digital agency based in Mumbai, India. We build websites & mobile apps, manage cloud hosting, deploy bulk SMS & email, and run on-ground campus activations and performance marketing.',
   keywords: [
     '24digital',
-    'digital agency India',
-    'web development agency',
-    'app development',
-    'cloud hosting India',
+    'digital agency Mumbai',
+    'web development Mumbai',
+    'mobile app development India',
+    'cloud hosting Mumbai',
     'VPS servers',
-    'bulk SMS India',
-    'email marketing',
-    'college activations',
-    'campus marketing',
-    'corporate activations',
-    'creator marketing',
-    'branding agency',
+    'bulk SMS Mumbai',
+    'email marketing India',
+    'college activations Mumbai',
+    'corporate popups',
+    'performance marketing agency',
+    'Meta ads agency',
+    'Google ads Mumbai',
+    'branding agency India',
   ],
   authors: [{ name: '24digital', url: siteUrl }],
   creator: '24digital',
@@ -48,7 +52,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: '24digital — We build it, host it, and get people talking',
     description:
-      'Websites, apps, hosting, bulk SMS & email, plus campus tours and creator campaigns. One team for the whole launch.',
+      'Websites, apps, hosting, bulk SMS, email, activations, and performance marketing — built, run and grown by one team in Mumbai.',
     url: siteUrl,
     siteName: '24digital',
     locale: 'en_IN',
@@ -93,6 +97,7 @@ export const metadata: Metadata = {
   manifest: '/manifest.webmanifest',
 };
 
+// Viewport: allows user zoom (no user-scalable=no)
 export const viewport: Viewport = {
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#F4F1EA' },
@@ -105,68 +110,53 @@ export const viewport: Viewport = {
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
-  name: '24digital',
-  alternateName: '24 Digital Agency',
+  name: site.name,
+  legalName: site.legalName,
+  alternateName: '24 Digital Agency Mumbai',
   url: siteUrl,
   logo: `${siteUrl}/brand/24digital-logo-primary.png`,
-  image: `${siteUrl}/brand/24digital-app-icon-1024.png`,
-  description:
-    'Full-stack digital agency in India providing web development, mobile apps, managed hosting, SMS/email marketing, and on-ground activations.',
+  image: `${siteUrl}/brand/24digital-og.png`,
+  email: site.email,
+  telephone: site.primaryPhone,
   priceRange: '₹₹',
   address: {
     '@type': 'PostalAddress',
+    addressLocality: 'Mumbai',
+    addressRegion: 'Maharashtra',
     addressCountry: 'IN',
   },
-  sameAs: [
-    'https://www.instagram.com',
-    'https://www.linkedin.com',
-    'https://www.youtube.com',
+  areaServed: {
+    '@type': 'Country',
+    name: 'India',
+  },
+  contactPoint: [
+    {
+      '@type': 'ContactPoint',
+      telephone: site.primaryPhone,
+      contactType: 'customer support',
+      areaServed: 'IN',
+      availableLanguage: ['English', 'Hindi'],
+    },
+    {
+      '@type': 'ContactPoint',
+      telephone: site.secondaryPhone,
+      contactType: 'sales',
+      areaServed: 'IN',
+      availableLanguage: ['English', 'Hindi'],
+    },
   ],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
-    name: '24digital Services',
-    itemListElement: [
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Websites & E-commerce',
-          description: 'Custom, high-speed websites and e-commerce stores designed to convert.',
-        },
+    name: '24digital Full-Stack Services',
+    itemListElement: services.map((s) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: s.name,
+        description: s.desc,
+        url: `${siteUrl}/services/${s.slug}`,
       },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'App Development',
-          description: 'Android and iOS apps engineered with intuitive UX and scalable back ends.',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Hosting & Domains',
-          description: 'High-availability web hosting, VPS, domain registration, and business email.',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'SMS & Email Marketing',
-          description: 'Promotional and transactional SMS blasts, OTP gateways, and automated newsletters.',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'College & Corporate Activations',
-          description: 'On-ground brand experiences, campus ambassador networks, tech-park demos, and UGC creator campaigns.',
-        },
-      },
-    ],
+    })),
   },
 };
 
@@ -179,7 +169,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <CookieConsent />
+        <Analytics />
+      </body>
     </html>
   );
 }

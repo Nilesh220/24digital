@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { services } from '../lib/content';
 import { Arrow, vars } from './ui/Icons';
 
@@ -13,7 +14,7 @@ export default function Services() {
       <div className="section-head reveal">
         <div>
           <p className="eyebrow">What we do</p>
-          <h2 className="h2">Nine services. One team that runs all of them.</h2>
+          <h2 className="h2">Ten services. One team that runs all of them.</h2>
         </div>
         <p className="lede">Pick one service or hand us the whole launch. Either way, the people who plan it are the people who build it, host it and run it.</p>
       </div>
@@ -52,7 +53,13 @@ export default function Services() {
               ))}
             </div>
             <div className="svc-panel__spacer" />
-            <a href="#contact" className="btn btn--paper" style={{ alignSelf: 'flex-start' }}>Talk to us about {s.short} <Arrow /></a>
+            <Link
+              href={`/services/${s.slug}`}
+              className="btn btn--paper"
+              style={{ alignSelf: 'flex-start' }}
+            >
+              See the full {s.short} page <Arrow />
+            </Link>
           </div>
         </div>
       </div>

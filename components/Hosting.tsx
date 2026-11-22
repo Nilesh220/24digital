@@ -13,18 +13,31 @@ export default function Hosting() {
           <p className="lede">Fast hosting, your own domain and professional email — set up and looked after by the same team that built your site.</p>
         </div>
         <div className="plans">
-          {plans.map((p, i) => (
-            <div key={p.name} className={`plan reveal${p.featured ? ' plan--featured' : ''}`} style={vars({ '--d': i })}>
-              <div className="plan__top">
-                <span className="plan__name">{p.name}</span>
-                {p.featured && <span className="plan__badge">POPULAR</span>}
+          {plans.map((p, i) => {
+            const waUrl = `https://wa.me/918699260386?text=${encodeURIComponent(p.whatsappMessage)}`;
+            return (
+              <div key={p.name} className={`plan reveal${p.featured ? ' plan--featured' : ''}`} style={vars({ '--d': i })}>
+                <div className="plan__top">
+                  <span className="plan__name">{p.name}</span>
+                  {p.featured && <span className="plan__badge">POPULAR</span>}
+                </div>
+                <p className="plan__desc">{p.desc}</p>
+                <div className="plan__price" style={{ fontSize: '24px', letterSpacing: '-0.02em' }}>
+                  <b>{p.price}</b>
+                </div>
+                <div className="plan__spacer" />
+                <a
+                  href={waUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`btn btn--block ${p.featured ? 'btn--paper' : 'btn--ink'}`}
+                  aria-label={`Ask for price on ${p.name} via WhatsApp`}
+                >
+                  Ask for price
+                </a>
               </div>
-              <p className="plan__desc">{p.desc}</p>
-              <div className="plan__price"><b>{p.price}</b><span>/month</span></div>
-              <div className="plan__spacer" />
-              <a href="#contact" className={`btn btn--block ${p.featured ? 'btn--paper' : 'btn--ink'}`}>Get started</a>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
