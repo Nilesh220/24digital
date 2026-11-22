@@ -33,7 +33,7 @@ export default function Contact() {
       `*Phone:* ${phone || 'Not provided'}\n` +
       `*Services Needed:* ${selectedNeeds}\n` +
       `*Details:* ${message || 'None provided'}\n\n` +
-      `Sent via 24digital.in`;
+      `Sent via 24digital.store`;
 
     const targetPhone = '918699260386';
     const waUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(waText)}`;

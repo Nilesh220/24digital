@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://24digital.in';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.24digital.store';
   const lastModified = new Date();
 
   return [

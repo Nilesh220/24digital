@@ -14,7 +14,7 @@ const interTight = Inter_Tight({
   display: 'swap',
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://24digital.in';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.24digital.store';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

@@ -5,7 +5,7 @@
 
 export const site = {
   name: '24digital',
-  url: 'https://24digital.in',
+  url: 'https://www.24digital.store',
   email: '[EMAIL]',
   phone: '+91 8699260386',
   whatsapp: '918699260386',

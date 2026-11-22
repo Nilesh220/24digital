@@ -42,7 +42,7 @@ export async function POST(req: Request) {
       `*Phone:* ${phone || 'Not provided'}\n` +
       `*Services Needed:* ${formattedNeeds}\n` +
       `*Details:* ${message || 'None provided'}\n\n` +
-      `Sent via 24digital.in`;
+      `Sent via 24digital.store`;
 
     const waUrl = `https://wa.me/${WHATSAPP_RECIPIENT}?text=${encodeURIComponent(waText)}`;
 

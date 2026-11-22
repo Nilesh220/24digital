@@ -151,7 +151,7 @@ export default async function Image() {
               letterSpacing: '-0.02em',
             }}
           >
-            24digital.in
+            24digital.store
           </div>
           <div
             style={{
