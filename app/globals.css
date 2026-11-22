@@ -77,6 +77,8 @@ h1, h2, h3, p { margin: 0; }
 .btn--paper:hover { background: var(--ink); color: var(--paper); }
 .btn--line-light { background: transparent; color: var(--paper); border-color: rgba(244, 241, 234, .3); }
 .btn--line-light:hover { background: var(--paper); color: var(--ink); }
+.btn--whatsapp { background: #20BA56; color: #fff; }
+.btn--whatsapp:hover { background: #128C7E; color: #fff; }
 .btn--sm { min-height: 46px; padding: 0 20px; }
 .btn--block { width: 100%; justify-content: center; }
 

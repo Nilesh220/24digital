@@ -7,7 +7,8 @@ export const site = {
   name: '24digital',
   url: 'https://24digital.in',
   email: '[EMAIL]',
-  phone: '[PHONE]',
+  phone: '+91 8699260386',
+  whatsapp: '918699260386',
   city: '[CITY, INDIA]',
   social: [
     { label: 'Instagram', href: '#' },
